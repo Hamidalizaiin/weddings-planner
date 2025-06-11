@@ -44,7 +44,7 @@ const Navbar = () => {
           )}
       </div>
       
-      <header className=" fixed w-full  ">
+      <header className=" fixed w-full  z-40">
               <nav className="py-6 flex justify-between items-center p-4 bg-[var(--color-primary)] text-white">
                   <div className="text-2xl ">Wedding Planner</div>
                   <div>
