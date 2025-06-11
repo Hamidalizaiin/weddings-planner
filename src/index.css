@@ -8,3 +8,11 @@
   --ButtonHover: #312e81;
   --Background: #ffffff;
 }
+
+.herobackground {
+  background-image: url("./assets/images/heroimage.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+}
