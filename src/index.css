@@ -1,12 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #1d4ed8; /* blue-700 */
-  --color-accent: #f59e0b; /* amber-500 */
-  --AccentLilac: (#f3f4f6);
-  --TextColor: (#1f2937);
-  --ButtonHover: #312e81;
-  --Background: #ffffff;
+  /* Elegant Custom Color Palette (No Pink, Red, or Blue) */
+  --color-ivory: #FFF8F0;
+  --color-ivory-dark: #F5EBDD;
+
+  --color-beige: #E7DCC8;
+  --color-beige-dark: #CBBBA0;
+
+  --color-sage-light: #DDEBDD;
+  --color-sage: #A7C4A0;
+  --color-sage-dark: #7A9D76;
+
+  --color-gold-light: #FFF8E1;
+  --color-gold: #E6C87C;
+  --color-gold-dark: #BDA55A;
+
+  --color-slategray-light: #F2F2F2;
+  --color-slategray: #6B7280;
+  --color-slategray-dark: #4B5563;
 }
 
 .herobackground {

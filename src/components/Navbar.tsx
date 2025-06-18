@@ -1,70 +1,133 @@
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const navLinks = [
+  { name: 'Home', href: '#' },
+  { name: 'How It Works', href: '#how' },
+  { name: 'Vendors', href: '#vendors' },
+  { name: 'About', href: '#about' },
+  { name: 'Contact', href: '#contact' },
+];
 
 const Navbar = () => {
-      const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-  <>
-{/* Mobile Menu */}
-  <div className="md:hidden">       
-          {/* Overlay */}
-          <div
-              className={`fixed flex flex-col justify-between top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 z-50 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+    <motion.nav
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="sticky top-0 z-50 shadow transition-shadow"
+      style={{ backgroundColor: 'var(--color-ivory)' }}
+    >
+      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
+        {/* Logo */}
+        <div className="font-bold text-2xl tracking-tight" style={{ color: 'var(--color-gold-dark)' }}>WeddingWork</div>
+
+        {/* Desktop Nav */}
+        <div className="hidden lg:flex items-center gap-8 flex-1 justify-center">
+          {navLinks.map(link => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="font-medium hover:underline transition-colors duration-200 px-2 py-1 rounded"
+              style={{ color: 'var(--color-slategray)', backgroundColor: 'transparent' }}
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+
+        {/* Desktop Buttons */}
+        <div className="hidden lg:flex items-center gap-3">
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            href="#login"
+            className="px-4 py-2 border rounded-lg font-medium transition-all duration-200"
+            style={{ color: 'var(--color-sage)', borderColor: 'var(--color-sage)', backgroundColor: 'transparent' }}
           >
-              {/* Close button */}
-              <div className="flex justify-end p-4">
-                  <button onClick={() => setIsOpen(false)} className="text-xl">
-                      <FontAwesomeIcon icon={faTimes} />
-                  </button>
-              </div>
+            Login
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            href="#vendors"
+            className="px-4 py-2 rounded-lg font-semibold shadow transition-all duration-200"
+            style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-slategray-dark)' }}
+          >
+            For Vendors
+          </motion.a>
+        </div>
 
-              {/* Nav Links */}
-              <nav className="flex flex-col space-y-4 px-6">
-                  <a href="#home" className="text-lg font-semibold">Home</a>
-                  <a href="#about" className="text-lg font-semibold">Browse Vendors</a>
-                  <a href="#services" className="text-lg font-semibold">How It Works</a>
-                  <a href="#contact" className="text-lg font-semibold">Contact</a>
-              </nav>
-
-              {/* Sign Up & profile icons */}
-              <div className="flex flex-col space-y-4 px-6">
-                    <button className="w-full mb-3 bg-[var(--color-primary)] text-white font-bold py-2 px-4 rounded-md hover:bg-[var(--color-primary-dark)] transition ease-in-out duration-300">
-                        Sign Up
-                    </button>   
-              </div>
-          </div>
-
-          {/* Optional backdrop */}
-          {isOpen && (
-              <div
-                  className="fixed inset-0 bg-black opacity-20 z-40"
-                  onClick={() => setIsOpen(false)} />
-          )}
+        {/* Hamburger for Mobile */}
+        <button
+          className="lg:hidden flex items-center justify-center w-10 h-10 rounded transition"
+          style={{ backgroundColor: 'var(--color-beige)' }}
+          onClick={() => setMenuOpen(true)}
+          aria-label="Open menu"
+        >
+          <svg width="24" height="24" fill="none" stroke="var(--color-gold-dark)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+        </button>
       </div>
-      
-      <header className=" fixed w-full  z-40">
-              <nav className="py-6 flex justify-between items-center p-4 bg-[var(--color-primary)] text-white">
-                  <div className="text-2xl ">Wedding Planner</div>
-                  <div>
-                      <ul className="hidden gap-6 lg:gap-12 items-center md:flex">
-                          <li className="twxt-sm lg:text-lg cursor-pointer hover:text-gray-200 transition ease-in-out duration-300">Home</li>
-                          <li className="twxt-sm lg:text-lg cursor-pointer hover:text-gray-200 transition ease-in-out duration-300">Browse Vendors</li>
-                          <li className="twxt-sm lg:text-lg cursor-pointer hover:text-gray-200 transition ease-in-out duration-300">How It Works</li>
-                          <li className="twxt-sm lg:text-lg cursor-pointer hover:text-gray-200 transition ease-in-out duration-300">Contact Us</li>
-                          <button className="w-[120px] bg-white hover:bg-[var(--color-primary)]  border-2 border-white hover:text-white text-black font-bold py-2 px-4 rounded-md cursor-pointer transition ease-in-out duration-300">
-                              Sign Up
-                          </button>
-                      </ul>
 
-                      <p className="text-2xl md:hidden cursor-pointer " onClick={() => setIsOpen(!isOpen)}>
-                          <FontAwesomeIcon icon={faBars} />
-                      </p>
-
-                  </div>
-              </nav>
-          </header></>
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'tween', duration: 0.35 }}
+            className="fixed inset-0 z-50 backdrop-blur flex flex-col lg:hidden"
+            style={{ backgroundColor: 'rgba(255, 248, 240, 0.97)' }}
+          >
+            <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: 'var(--color-beige-dark)' }}>
+              <span className="font-bold text-2xl" style={{ color: 'var(--color-gold-dark)' }}>WeddingWork</span>
+              <button
+                className="w-10 h-10 flex items-center justify-center rounded transition"
+                style={{ backgroundColor: 'var(--color-beige)' }}
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <svg width="24" height="24" fill="none" stroke="var(--color-gold-dark)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              </button>
+            </div>
+            <nav className="flex flex-col gap-4 mt-10 px-8">
+              {navLinks.map(link => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-lg font-medium py-3 px-4 rounded-lg transition-all duration-200"
+                  style={{ color: 'var(--color-slategray)', backgroundColor: 'var(--color-beige)' }}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.name}
+                </a>
+              ))}
+            </nav>
+            <div className="flex flex-col gap-3 mt-8 px-8">
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                href="#login"
+                className="px-4 py-3 border rounded-lg font-medium transition-all duration-200 text-center"
+                style={{ color: 'var(--color-sage)', borderColor: 'var(--color-sage)', backgroundColor: 'transparent' }}
+                onClick={() => setMenuOpen(false)}
+              >
+                Login
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                href="#vendors"
+                className="px-4 py-3 rounded-lg font-semibold shadow transition-all duration-200 text-center"
+                style={{ backgroundColor: 'var(--color-gold)', color: 'var(--color-slategray-dark)' }}
+                onClick={() => setMenuOpen(false)}
+              >
+                For  Vendors
+              </motion.a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 };
 
